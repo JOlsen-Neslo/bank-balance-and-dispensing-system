@@ -1,4 +1,4 @@
-package za.co.neslotech.bankingsystem;
+package za.co.neslotech.banking;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
