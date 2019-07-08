@@ -22,11 +22,11 @@ public class Account extends BankEntity {
     @JoinColumn(name = "CLIENT_ID", nullable = false)
     private Client client;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ACCOUNT_TYPE_CODE", nullable = false)
     private AccountType type;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CURRENCY_CODE", nullable = false)
     private Currency currencyCode;
 

@@ -9,6 +9,7 @@ import za.co.neslotech.banking.models.account.Account;
 import za.co.neslotech.banking.models.account.AccountType;
 import za.co.neslotech.banking.models.client.Client;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,24 @@ public class AccountResourceTest {
 
         Client client = account.getClient();
         assertNotNull(client);
+    }
+
+    @Test
+    public void testRetrieveAccountsByClientIdDesc() {
+        List<Account> accounts = accountResource.findAllByClientIdOrderByBalanceDesc(1);
+        assertFalse(accounts.isEmpty());
+
+        BigDecimal amount = null;
+        for (Account account : accounts) {
+            if (amount == null) {
+                amount = account.getBalance();
+                continue;
+            }
+
+            if (amount.compareTo(account.getBalance()) > 0) {
+                fail("The list of accounts are not sorted correctly.");
+            }
+        }
     }
 
 }
