@@ -3,6 +3,7 @@ package za.co.neslotech.banking.controllers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureTestDatabase
 public class ClientControllerTest {
 
     @Autowired
@@ -29,16 +31,16 @@ public class ClientControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.clientId", is("1")))
-                .andExpect(jsonPath("$.accounts", hasSize(8)));
+                .andExpect(jsonPath("$.accounts", hasSize(3)));
     }
 
     @Test
     public void testRetrieveAccountsEmpty() throws Exception {
         this.mockMvc.perform(get("/clients/45/accounts"))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.clientId", is("45")))
-                .andExpect(jsonPath("$.accounts", hasSize(0)));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is("NOT_FOUND")))
+                .andExpect(jsonPath("$.message", is("No accounts to display.")));
     }
 
 }

@@ -57,7 +57,7 @@ public class AccountResourceTest {
                 continue;
             }
 
-            if (amount.compareTo(account.getBalance()) > 0) {
+            if (amount.compareTo(account.getBalance()) < 0) {
                 fail("The list of accounts are not sorted correctly.");
             }
         }

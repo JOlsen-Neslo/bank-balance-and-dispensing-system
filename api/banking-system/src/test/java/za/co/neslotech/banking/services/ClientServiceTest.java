@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import za.co.neslotech.banking.exceptions.NotFoundException;
 import za.co.neslotech.banking.schema.client.ApiClient;
 import za.co.neslotech.banking.schema.client.ClientAccount;
 
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApiClientServiceTest {
+public class ClientServiceTest {
 
     @Autowired
     private IClientService clientService;
@@ -35,13 +36,12 @@ public class ApiClientServiceTest {
         });
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testRetrieveAccountsEmpty() {
         ApiClient apiClient = new ApiClient();
         apiClient.setClientId("45");
 
-        List<ClientAccount> clientAccounts = clientService.retrieveAccounts(apiClient);
-        assertTrue(clientAccounts.isEmpty());
+        clientService.retrieveAccounts(apiClient);
     }
 
 }

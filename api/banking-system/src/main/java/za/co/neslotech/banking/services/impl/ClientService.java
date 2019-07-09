@@ -3,6 +3,7 @@ package za.co.neslotech.banking.services.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import za.co.neslotech.banking.exceptions.NotFoundException;
 import za.co.neslotech.banking.models.account.Account;
 import za.co.neslotech.banking.models.account.AccountType;
 import za.co.neslotech.banking.resources.IAccountResource;
@@ -43,6 +44,10 @@ public class ClientService implements IClientService {
                 clientAccounts.add(clientAccount);
             }
         });
+
+        if (clientAccounts.isEmpty()) {
+            throw new NotFoundException("No accounts to display.");
+        }
 
         return clientAccounts;
     }
