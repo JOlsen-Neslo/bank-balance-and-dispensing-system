@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.co.neslotech.banking.exceptions.NotFoundException;
 import za.co.neslotech.banking.schema.client.ApiClient;
-import za.co.neslotech.banking.schema.client.ClientAccount;
+import za.co.neslotech.banking.schema.client.account.ClientAccount;
 
 import java.util.List;
 
@@ -42,6 +42,30 @@ public class ClientServiceTest {
         apiClient.setClientId("45");
 
         clientService.retrieveAccounts(apiClient);
+    }
+
+    @Test
+    public void testRetrieveCurrencyAccounts() {
+        ApiClient apiClient = new ApiClient();
+        apiClient.setClientId("1");
+
+        List<ClientAccount> clientAccounts = clientService.retrieveCurrencyAccounts(apiClient);
+        assertFalse(clientAccounts.isEmpty());
+
+        clientAccounts.forEach(clientAccount -> {
+            assertNotNull(clientAccount.getAccountNumber());
+            assertNotNull(clientAccount.getAccountType());
+            assertNotNull(clientAccount.getBalance());
+            assertNotNull(clientAccount.getCurrency());
+        });
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testRetrieveCurrencyAccountsEmpty() {
+        ApiClient apiClient = new ApiClient();
+        apiClient.setClientId("45");
+
+        clientService.retrieveCurrencyAccounts(apiClient);
     }
 
 }

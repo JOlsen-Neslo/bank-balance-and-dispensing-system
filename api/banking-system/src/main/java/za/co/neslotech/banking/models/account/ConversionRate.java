@@ -3,11 +3,8 @@ package za.co.neslotech.banking.models.account;
 import lombok.Data;
 import za.co.neslotech.banking.models.BankEntity;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity

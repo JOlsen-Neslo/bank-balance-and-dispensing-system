@@ -6,10 +6,10 @@ import za.co.neslotech.banking.models.account.Account;
 import java.util.List;
 import java.util.Optional;
 
-public interface IAccountResource extends JpaRepository<Account, Integer> {
+public interface IAccountResource extends JpaRepository<Account, String> {
 
-    Optional<Account> findByAccountNumber(String accountNumber);
+    List<Account> findAllByClientIdAndTypeTransactionalOrderByBalanceDesc(Integer clientId, boolean transactional);
 
-    List<Account> findAllByClientIdOrderByBalanceDesc(Integer clientId);
+    List<Account> findAllByClientIdAndTypeCodeOrderByBalanceDesc(Integer clientId, String accountTypeCode);
 
 }

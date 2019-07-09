@@ -1,4 +1,4 @@
-package za.co.neslotech.banking.schema.client;
+package za.co.neslotech.banking.schema.client.account;
 
 import lombok.Data;
 import za.co.neslotech.banking.schema.ApiEntity;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class ClientAccount extends ApiEntity {
 
     private String accountNumber;
-    private String accountType;
+    private ClientAccountType accountType;
     private String currency;
     private BigDecimal balance;
 

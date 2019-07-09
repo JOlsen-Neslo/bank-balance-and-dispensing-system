@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import za.co.neslotech.banking.models.account.Account;
 import za.co.neslotech.banking.models.account.AccountType;
 import za.co.neslotech.banking.models.client.Client;
+import za.co.neslotech.banking.schema.client.account.ClientAccountType;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,14 +24,14 @@ public class AccountResourceTest {
     private IAccountResource accountResource;
 
     @Test
-    public void testRetrieveAll() {
+    public void testFindAll() {
         List<Account> accounts = accountResource.findAll();
         assertFalse(accounts.isEmpty());
     }
 
     @Test
     public void testRetrieveAccountByAccountNumber() {
-        Optional<Account> accountOptional = accountResource.findByAccountNumber("1053664521");
+        Optional<Account> accountOptional = accountResource.findById("1053664521");
         if (!accountOptional.isPresent()) {
             fail("A account could not be found with the ID supplied.");
         }
@@ -46,10 +47,23 @@ public class AccountResourceTest {
     }
 
     @Test
-    public void testRetrieveAccountsByClientIdDesc() {
-        List<Account> accounts = accountResource.findAllByClientIdOrderByBalanceDesc(1);
+    public void testFindAllByClientIdAndTypeTransactionalOrderByBalanceDesc() {
+        List<Account> accounts = accountResource.findAllByClientIdAndTypeTransactionalOrderByBalanceDesc(1, true);
         assertFalse(accounts.isEmpty());
 
+        checkSorting(accounts);
+    }
+
+    @Test
+    public void testFindAllByClientIdAndTypeCodeOrderByBalanceDesc() {
+        List<Account> accounts = accountResource
+                .findAllByClientIdAndTypeCodeOrderByBalanceDesc(1, ClientAccountType.FOREIGN_CURRENCY.getCode());
+        assertFalse(accounts.isEmpty());
+
+        checkSorting(accounts);
+    }
+
+    private void checkSorting(List<Account> accounts) {
         BigDecimal amount = null;
         for (Account account : accounts) {
             if (amount == null) {

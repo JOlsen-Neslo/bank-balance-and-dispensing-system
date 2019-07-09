@@ -22,7 +22,7 @@ public class ClientResourceTest {
     private IClientResource clientResource;
 
     @Test
-    public void testRetrieveAll() {
+    public void testFindAll() {
         List<Client> clients = clientResource.findAll();
         assertFalse(clients.isEmpty());
     }

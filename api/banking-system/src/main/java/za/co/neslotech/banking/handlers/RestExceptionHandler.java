@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import za.co.neslotech.banking.exceptions.CalculationException;
 import za.co.neslotech.banking.exceptions.NotFoundException;
 import za.co.neslotech.banking.schema.ApiError;
 
@@ -17,6 +18,16 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(CalculationException.class)
+    protected ResponseEntity<ApiError> handleCalcError(CalculationException ex) {
+        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR);
+        apiError.setMessage(ex.getMessage());
+        apiError.setTimestamp(LocalDateTime.now().toString());
+
+        log.error(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<ApiError> handleNotFound(NotFoundException ex) {

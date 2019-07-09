@@ -43,4 +43,22 @@ public class ClientControllerTest {
                 .andExpect(jsonPath("$.message", is("No accounts to display.")));
     }
 
+    @Test
+    public void testRetrieveCurrencyAccounts() throws Exception {
+        this.mockMvc.perform(get("/clients/1/accounts?transactional=false"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.clientId", is("1")))
+                .andExpect(jsonPath("$.accounts", hasSize(3)));
+    }
+
+    @Test
+    public void testRetrieveCurrencyAccountsEmpty() throws Exception {
+        this.mockMvc.perform(get("/clients/45/accounts?transactional=false"))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is("NOT_FOUND")))
+                .andExpect(jsonPath("$.message", is("No accounts to display.")));
+    }
+
 }

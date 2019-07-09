@@ -20,7 +20,7 @@ public class ATMResourceTest {
     private IATMResource atmResource;
 
     @Test
-    public void testRetrieveAll() {
+    public void testFindAll() {
         List<ATM> atms = atmResource.findAll();
         assertFalse(atms.isEmpty());
     }

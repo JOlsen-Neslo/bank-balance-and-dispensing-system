@@ -4,12 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import za.co.neslotech.banking.schema.client.ApiClient;
-import za.co.neslotech.banking.schema.client.ClientAccount;
+import za.co.neslotech.banking.schema.client.account.ClientAccount;
 import za.co.neslotech.banking.services.IClientService;
 
 import java.util.List;
@@ -30,19 +27,24 @@ public class ClientController {
     }
 
     @GetMapping(path = "/{id}/accounts")
-    public ResponseEntity<ApiClient> retrieveAccounts(@PathVariable String id) {
+    public ResponseEntity<ApiClient> retrieveAccounts(@PathVariable String id,
+                                                      @RequestParam(defaultValue = "true") boolean transactional) {
         log.debug("ClientController :: retrieveAccounts :: " + id);
 
         ApiClient apiClient = new ApiClient();
         apiClient.setClientId(id);
 
-        List<ClientAccount> accounts = clientService.retrieveAccounts(apiClient);
+        List<ClientAccount> accounts;
+        if (transactional) {
+            accounts = clientService.retrieveAccounts(apiClient);
+        } else {
+            accounts = clientService.retrieveCurrencyAccounts(apiClient);
+        }
+
         apiClient.setAccounts(accounts);
 
-        if (!accounts.isEmpty()) {
-            Link accountsLink = linkTo(methodOn(ClientController.class).retrieveAccounts(id)).withRel("accounts");
-            apiClient.add(accountsLink);
-        }
+        Link accountsLink = linkTo(methodOn(ClientController.class).retrieveAccounts(id, transactional)).withRel("accounts");
+        apiClient.add(accountsLink);
 
         Link customerLink = linkTo(ClientController.class).slash(id).withSelfRel();
         apiClient.add(customerLink);
