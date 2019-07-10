@@ -12,9 +12,13 @@ import java.math.BigDecimal;
 public class CreditCardLimit extends BankEntity {
 
     @Id
+    @Column(name = "CLIENT_ACCOUNT_NUMBER", nullable = false)
+    private String accountNumber;
+
     @OneToOne
+    @MapsId
     @JoinColumn(name = "CLIENT_ACCOUNT_NUMBER", nullable = false)
-    private Account accountNumber;
+    private Account account;
 
     @Column(name = "ACCOUNT_LIMIT", nullable = false)
     private BigDecimal limit;

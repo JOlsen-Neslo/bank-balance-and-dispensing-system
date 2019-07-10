@@ -12,4 +12,6 @@ public interface IAccountResource extends JpaRepository<Account, String> {
 
     List<Account> findAllByClientIdAndTypeCodeOrderByBalanceDesc(Integer clientId, String accountTypeCode);
 
+    Optional<Account> findByAccountNumberAndClientId(String accountNumber, Integer clientId);
+
 }

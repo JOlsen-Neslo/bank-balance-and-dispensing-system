@@ -11,4 +11,8 @@ public interface IClientService {
 
     List<ClientAccount> retrieveCurrencyAccounts(ApiClient apiClient);
 
+    ClientAccount checkAccountBalance(ApiClient apiClient, ClientAccount clientAccount);
+
+    ClientAccount updateBalance(ClientAccount account);
+
 }

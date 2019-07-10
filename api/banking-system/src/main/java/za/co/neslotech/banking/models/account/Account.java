@@ -1,8 +1,6 @@
 package za.co.neslotech.banking.models.account;
 
 import lombok.Data;
-import javax.persistence.Id;
-
 import za.co.neslotech.banking.models.BankEntity;
 import za.co.neslotech.banking.models.client.Client;
 
@@ -33,4 +31,7 @@ public class Account extends BankEntity {
     @Column(name = "DISPLAY_BALANCE")
     private BigDecimal balance;
 
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    private CreditCardLimit cardLimit;
+    
 }

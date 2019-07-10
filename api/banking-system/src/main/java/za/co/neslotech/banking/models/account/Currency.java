@@ -20,4 +20,7 @@ public class Currency extends BankEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
+    @OneToOne(mappedBy = "currency", cascade = CascadeType.ALL)
+    private ConversionRate conversionRate;
+
 }

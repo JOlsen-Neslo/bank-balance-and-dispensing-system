@@ -4,7 +4,6 @@ import lombok.Data;
 import za.co.neslotech.banking.models.BankEntity;
 
 import javax.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -21,5 +20,10 @@ public class ConversionRate extends BankEntity {
 
     @Column(name = "RATE", nullable = false)
     private BigDecimal rate;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "CURRENCY_CODE", nullable = false)
+    private Currency currency;
 
 }

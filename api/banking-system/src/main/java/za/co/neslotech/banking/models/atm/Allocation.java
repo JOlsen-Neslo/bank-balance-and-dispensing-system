@@ -3,8 +3,6 @@ package za.co.neslotech.banking.models.atm;
 import lombok.Data;
 import za.co.neslotech.banking.models.BankEntity;
 
-import javax.persistence.Id;
-
 import javax.persistence.*;
 
 @Entity
@@ -21,8 +19,9 @@ public class Allocation extends BankEntity {
     @JoinColumn(name = "ATM_ID", nullable = false)
     private ATM atm;
 
-    @Column(name = "DENOMINATION_ID", nullable = false)
-    private String denomination;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "DENOMINATION_ID", nullable = false)
+    private Denomination denomination;
 
     @Column(name = "COUNT", nullable = false)
     private Integer count;

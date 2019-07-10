@@ -18,7 +18,7 @@ public class DenominationType extends BankEntity {
     @Id
     @GeneratedValue
     @Column(name = "DENOMINATION_TYPE_CODE", nullable = false)
-    private String code;
+    private char code;
 
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
