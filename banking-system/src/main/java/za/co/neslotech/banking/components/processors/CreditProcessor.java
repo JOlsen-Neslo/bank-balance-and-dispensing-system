@@ -32,7 +32,7 @@ public class CreditProcessor extends CardLimitProcessor {
 
         if (ClientAccountType.CREDIT_CARD.toString().equalsIgnoreCase(accountType.getCode())) {
             CreditCardLimit limit = account.getCardLimit();
-            BigDecimal outcome = operationFacade.calculate(account.getBalance(), withdrawalAmount, SUBTRACT_OPERATOR);
+            BigDecimal outcome = operationFacade.calculate(account.getBalance(), withdrawalAmount, ADD_OPERATOR);
             if (limit.getLimit().compareTo(outcome) < 0) {
                 throw new CalculationException("Insufficient funds.");
             }

@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 public abstract class CardLimitProcessor implements Ordered {
 
     protected static final String SUBTRACT_OPERATOR = "-";
+    protected static final String ADD_OPERATOR = "+";
 
     protected CardLimitProcessor nextProcessor;
 
